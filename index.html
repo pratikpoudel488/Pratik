@@ -3,353 +3,1084 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pratik Poudel — Data Science Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <title>Puspa Poudel — Writer & Poet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── CSS VARIABLES ─── */
+    :root {
+      --ink:        #1a1208;
+      --parchment:  #f5efe3;
+      --cream:      #faf6ef;
+      --gold:       #b8922a;
+      --gold-light: #d4a93c;
+      --rust:       #8b3a2a;
+      --sage:       #5a6b55;
+      --muted:      #7a6d5e;
+      --border:     #d6c9b0;
+      --shadow:     rgba(26,18,8,0.15);
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(245,239,227,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex; gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+
+    /* Left — photo column */
+    .hero-photo-col {
+      position: relative;
+      background: var(--parchment);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 4rem 3rem 0;
+      overflow: hidden;
+    }
+
+    .hero-photo-col::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(184,146,42,0.08) 0%, transparent 60%),
+        linear-gradient(to top, rgba(26,18,8,0.12) 0%, transparent 40%);
+    }
+
+    /* Decorative corner marks */
+    .hero-photo-col::after {
+      content: '';
+      position: absolute;
+      top: 2rem; left: 2rem;
+      width: 60px; height: 60px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .photo-corner-br {
+      position: absolute;
+      bottom: 2rem; right: 2rem;
+      width: 60px; height: 60px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .hero-photo-wrapper {
+      position: relative;
+      width: 380px;
+      max-width: 100%;
+      z-index: 1;
+    }
+
+    .hero-photo-wrapper img {
+      display: block;
+      width: 100%;
+      /* half-page article photo style — portrait, bottom-aligned */
+      height: 520px;
+      object-fit: cover;
+      object-position: top center;
+      filter: sepia(0.12) contrast(1.04);
+      box-shadow:
+        8px 8px 0 var(--gold),
+        16px 16px 0 rgba(184,146,42,0.25);
+    }
+
+    /* Placeholder when puspa.jpg not found */
+    .photo-placeholder {
+      width: 100%;
+      height: 520px;
+      background: linear-gradient(160deg, #d6c9b0 0%, #c4b396 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem;
+      box-shadow:
+        8px 8px 0 var(--gold),
+        16px 16px 0 rgba(184,146,42,0.25);
+    }
+
+    .photo-placeholder span {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .photo-placeholder .ph-icon {
+      font-size: 3.5rem;
+      opacity: 0.4;
+    }
+
+    .hero-photo-caption {
+      text-align: center;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 1rem;
+      padding-bottom: 2.5rem;
+    }
+
+    /* Right — text column */
+    .hero-text-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 4rem 5rem;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 40px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
+    }
+
+    .hero-divider {
+      width: 80px; height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-bio {
+      font-size: 1.1rem;
+      color: var(--ink);
+      line-height: 1.9;
+      max-width: 480px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .hero-bio strong {
+      font-weight: 600;
+      color: var(--rust);
+    }
+
+    .hero-cta-group {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      background: var(--ink);
+      color: var(--parchment);
+      border: none; cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      background: var(--parchment);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ─── SECTION STYLES ─── */
+    section { padding: 6rem 0; }
+
+    .section-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .section-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 3.5rem;
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    /* ─── ABOUT STRIP ─── */
+    .about-strip {
+      background: var(--ink);
+      color: var(--parchment);
+    }
+
+    .about-strip .section-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-quote-col {
+      border-left: 3px solid var(--gold);
+      padding-left: 2rem;
+    }
+
+    .about-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      color: var(--parchment);
+      margin-bottom: 1rem;
+    }
+
+    .about-quote-attr {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .about-text-col p {
+      font-size: 1.05rem;
+      color: rgba(245,239,227,0.85);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .about-text-col p:last-child { margin-bottom: 0; }
+
+    /* ─── BOOKS SECTION ─── */
+    .books-section { background: var(--cream); }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .book-card {
+      background: var(--parchment);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .book-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--rust));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .book-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px var(--shadow);
+    }
+
+    .book-card:hover::before { opacity: 1; }
+
+    .book-cover {
+      height: 220px;
+      background: linear-gradient(135deg, var(--ink) 0%, #3a2d1a 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-cover::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 10px,
+          rgba(184,146,42,0.05) 10px,
+          rgba(184,146,42,0.05) 11px
+        );
+    }
+
+    .book-cover-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      text-align: center;
+      padding: 1rem 1.5rem;
+      z-index: 1;
+      position: relative;
+    }
+
+    .book-genre-badge {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      z-index: 2;
+    }
+
+    .book-body { padding: 1.75rem; }
+
+    .book-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .book-year {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    .book-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ─── POEMS SECTION ─── */
+    .poems-section {
+      background: var(--parchment);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .poems-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .poem-card {
+      border-left: 2px solid var(--gold);
+      padding: 1.75rem 1.75rem 1.75rem 2rem;
+      background: var(--cream);
+      position: relative;
+    }
+
+    .poem-card::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem; left: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.15;
+      line-height: 1;
+    }
+
+    .poem-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--rust);
+    }
+
+    .poem-lines {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--ink);
+      font-style: italic;
+      white-space: pre-line;
+    }
+
+    .poem-footer {
+      margin-top: 1.2rem;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── RECOGNITION / STATS ─── */
+    .stats-section {
+      background: var(--ink);
+      padding: 5rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(245,239,227,0.1);
+      position: relative;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,239,227,0.6);
+    }
+
+    /* ─── CONTACT SECTION ─── */
+    .contact-section {
+      background: var(--parchment);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info-col p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    .contact-detail-item .icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .contact-form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-input, .form-textarea {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.3s;
+      resize: none;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-textarea { height: 130px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #120e06;
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(184,146,42,0.2);
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,239,227,0.35);
+    }
+
+    .footer-socials {
+      display: flex; gap: 1.2rem;
+    }
+
+    .footer-socials a {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(184,146,42,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(245,239,227,0.5);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .footer-socials a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ─── DECORATIVE ELEMENTS ─── */
+    .ornament {
+      text-align: center;
+      color: var(--gold);
+      font-size: 1.2rem;
+      opacity: 0.5;
+      margin: 1rem 0;
+      letter-spacing: 0.5rem;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow  { animation: fadeUp 0.8s ease 0.1s both; }
+    .hero-name     { animation: fadeUp 0.8s ease 0.25s both; }
+    .hero-tagline  { animation: fadeUp 0.8s ease 0.4s both; }
+    .hero-divider  { animation: fadeUp 0.8s ease 0.5s both; }
+    .hero-bio      { animation: fadeUp 0.8s ease 0.6s both; }
+    .hero-cta-group{ animation: fadeUp 0.8s ease 0.75s both; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-photo-col { padding: 6rem 2rem 0; min-height: 55vh; align-items: flex-end; }
+      .hero-photo-wrapper { width: 280px; }
+      .hero-photo-wrapper img, .photo-placeholder { height: 380px; }
+      .hero-text-col { padding: 3rem 2rem; }
+
+      .about-strip .section-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .books-grid { grid-template-columns: 1fr; }
+      .poems-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+
+      .section-inner { padding: 0 1.5rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Custom Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- ─── NAVBAR ─── -->
+  <!-- ══ NAV ══ -->
   <nav>
-    <a class="nav-logo" href="#">Pratik Poudel</a>
+    <a href="#" class="nav-logo">Puspa Poudel</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
+      <li><a href="#books">Books</a></li>
+      <li><a href="#poetry">Poetry</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- ─── HERO ─── -->
-  <div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-
-    <div class="hero-content">
-      <!-- LEFT -->
-      <div>
-        <p class="hero-label">Portfolio — 2025</p>
-        <h1 class="hero-name">Pratik<br><em>Poudel</em></h1>
-        <p class="hero-title">
-          <span class="typing-text" id="typingText"></span><span class="typing-cursor"></span>
-        </p>
-        <p class="hero-desc">
-          Transforming raw data into actionable intelligence. Bridging the gap between complex datasets and clear, business-driven decisions through Python, SQL, and modern data science practices.
-        </p>
-        <div class="hero-cta">
-          <a href="#projects" class="btn-primary">View My Work</a>
-          <a href="#contact" class="btn-outline">Get in Touch</a>
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="home">
+    <!-- Photo Column -->
+    <div class="hero-photo-col">
+      <div class="photo-corner-br"></div>
+      <div class="hero-photo-wrapper">
+        <!-- Place puspa.jpg in the same folder as this HTML file -->
+        <img
+          src="puspa.jpg"
+          alt="Puspa Poudel — Author & Poet"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="photo-placeholder" style="display:none;">
+          <span class="ph-icon">✦</span>
+          <span>Puspa Poudel</span>
+          <span>Place puspa.jpg here</span>
         </div>
       </div>
+      <div class="hero-photo-caption">Puspa Poudel &nbsp;·&nbsp; Kathmandu, Nepal</div>
+    </div>
 
-      <!-- RIGHT — STAT CARD -->
-      <div class="hero-visual fade-up" style="animation-delay:0.3s">
-        <div class="hero-card">
-          <div class="stat-row">
-            <div class="stat">
-              <span class="stat-num">3+</span>
-              <span class="stat-label">Core Skills</span>
-            </div>
-            <div class="stat">
-              <span class="stat-num">∞</span>
-              <span class="stat-label">Curiosity</span>
-            </div>
-          </div>
+    <!-- Text Column -->
+    <div class="hero-text-col">
+      <div class="hero-eyebrow">Novelist &nbsp;·&nbsp; Poet &nbsp;·&nbsp; Storyteller</div>
+      <h1 class="hero-name">
+        Puspa
+        <em>Poudel</em>
+      </h1>
+      <p class="hero-tagline">Where Nepali heartbeats become words<br>and silence turns into stories.</p>
+      <div class="hero-divider"></div>
+      <p class="hero-bio">
+        A voice rooted in the mountains and valleys of Nepal, Puspa Poudel weaves <strong>novels, short literature, and poetry</strong> that explore human longing, identity, and the gentle passage of time. Her work has moved readers across generations with its honest beauty.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#books" class="btn-primary">Explore Books</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+  </section>
 
-          <div style="border-top: 1px solid var(--border); padding-top: 1.5rem; margin-bottom: 1.5rem;">
-            <p style="font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;">Proficiency</p>
-            <div class="skill-bar-group">
-              <div class="skill-bar-item">
-                <div class="skill-bar-label"><span>Python</span><span>92%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%; background: var(--accent);"></div></div>
-              </div>
-              <div class="skill-bar-item">
-                <div class="skill-bar-label"><span>SQL</span><span>88%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%; background: var(--accent2); animation-delay:0.65s"></div></div>
-              </div>
-              <div class="skill-bar-item">
-                <div class="skill-bar-label"><span>Data Science</span><span>85%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%; background: var(--accent3); animation-delay:0.8s"></div></div>
-              </div>
-            </div>
-          </div>
+  <!-- ══ ABOUT STRIP ══ -->
+  <section class="about-strip" id="about">
+    <div class="section-inner">
+      <div class="about-quote-col">
+        <div class="about-quote">
+          "I write not to escape the world, but to understand it — one line at a time."
+        </div>
+        <div class="about-quote-attr">— Puspa Poudel</div>
+      </div>
+      <div class="about-text-col">
+        <p>
+          Puspa Poudel is a celebrated Nepali author known for her deeply human prose and lyrical poetry. Born and raised in Nepal, she draws from the rich oral traditions, landscapes, and lived experiences of her homeland to create literature that resonates far beyond borders.
+        </p>
+        <p>
+          Her novels explore the intricate emotional lives of ordinary people — mothers, daughters, lovers, wanderers — with a tenderness that is distinctly her own. Her poetry collections have been praised for their spare, meditative quality and the way they hold grief and joy in the same breath.
+        </p>
+        <p>
+          Over the years, Puspa has contributed to literary journals, participated in national literature festivals, and mentored emerging Nepali writers. She believes that storytelling is a sacred act — a bridge between the self and the world.
+        </p>
+      </div>
+    </div>
+  </section>
 
-          <div style="display:flex; align-items:center; gap:0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-            <div style="width:8px; height:8px; border-radius:50%; background: #4ade80; box-shadow: 0 0 8px #4ade80;"></div>
-            <span style="font-size:0.78rem; color: var(--muted);">Available for opportunities</span>
+  <!-- ══ BOOKS ══ -->
+  <section class="books-section" id="books">
+    <div class="section-inner">
+      <div class="section-label">Published Works</div>
+      <h2 class="section-title">Books & Literature</h2>
+      <p class="section-subtitle">A curated collection of novels, novellas, and short literary works.</p>
+
+      <div class="books-grid">
+
+        <div class="book-card">
+          <div class="book-cover">
+            <span class="book-genre-badge">Novel</span>
+            <div class="book-cover-title">माटोको सुगन्ध<br><small style="font-size:0.75rem;opacity:0.7;">Fragrance of Soil</small></div>
           </div>
+          <div class="book-body">
+            <div class="book-title">Fragrance of Soil</div>
+            <div class="book-year">2018 &nbsp;·&nbsp; Novel</div>
+            <div class="book-desc">A moving portrait of a woman returning to her village after decades in the city, rediscovering roots she thought she had left behind forever.</div>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">
+            <span class="book-genre-badge">Short Stories</span>
+            <div class="book-cover-title">मौनताका आवाजहरू<br><small style="font-size:0.75rem;opacity:0.7;">Voices of Silence</small></div>
+          </div>
+          <div class="book-body">
+            <div class="book-title">Voices of Silence</div>
+            <div class="book-year">2020 &nbsp;·&nbsp; Short Literature</div>
+            <div class="book-desc">Twelve intimate short stories that give voice to the unheard — the grandmother in the corner, the fisherman at dusk, the child by the river.</div>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">
+            <span class="book-genre-badge">Poetry</span>
+            <div class="book-cover-title">नीलो बादल<br><small style="font-size:0.75rem;opacity:0.7;">Blue Clouds</small></div>
+          </div>
+          <div class="book-body">
+            <div class="book-title">Blue Clouds</div>
+            <div class="book-year">2021 &nbsp;·&nbsp; Poetry Collection</div>
+            <div class="book-desc">A debut poetry collection that moves between longing and acceptance — verses on love, loss, the Himalayas, and the small dignities of daily life.</div>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">
+            <span class="book-genre-badge">Novella</span>
+            <div class="book-cover-title">एउटा पत्र<br><small style="font-size:0.75rem;opacity:0.7;">One Letter</small></div>
+          </div>
+          <div class="book-body">
+            <div class="book-title">One Letter</div>
+            <div class="book-year">2022 &nbsp;·&nbsp; Novella</div>
+            <div class="book-desc">A gripping novella told entirely through letters exchanged between two sisters separated by migration, political upheaval, and time.</div>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">
+            <span class="book-genre-badge">Novel</span>
+            <div class="book-cover-title">जरासित जोडिएको<br><small style="font-size:0.75rem;opacity:0.7;">Rooted</small></div>
+          </div>
+          <div class="book-body">
+            <div class="book-title">Rooted</div>
+            <div class="book-year">2023 &nbsp;·&nbsp; Novel</div>
+            <div class="book-desc">Her most ambitious novel yet — three generations of a Nepali family navigating identity, belonging, and what it means to call a place home.</div>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">
+            <span class="book-genre-badge">Poetry</span>
+            <div class="book-cover-title">उज्यालो रात<br><small style="font-size:0.75rem;opacity:0.7;">Luminous Night</small></div>
+          </div>
+          <div class="book-body">
+            <div class="book-title">Luminous Night</div>
+            <div class="book-year">2024 &nbsp;·&nbsp; Poetry Collection</div>
+            <div class="book-desc">Her second poetry collection, darker and more contemplative — meditations on grief, memory, starlight, and the resilience of the human spirit.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STATS ══ -->
+  <div class="stats-section">
+    <div class="section-inner">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">6+</div>
+          <div class="stat-label">Published Books</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100+</div>
+          <div class="stat-label">Poems Written</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">12+</div>
+          <div class="stat-label">Years of Writing</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Stories to Tell</div>
         </div>
       </div>
     </div>
   </div>
 
-  <hr class="divider">
+  <!-- ══ POETRY ══ -->
+  <section class="poems-section" id="poetry">
+    <div class="section-inner">
+      <div class="section-label">Selected Verses</div>
+      <h2 class="section-title">Poetry</h2>
+      <p class="section-subtitle">Fragments of feeling, offered to the world.</p>
 
-  <!-- ─── ABOUT ─── -->
-  <section id="about">
-    <div class="about-grid">
-      <div>
-        <div class="section-header">
-          <p class="section-label">Who I Am</p>
-          <h2 class="section-title">Turning data into<br><em style="font-family:var(--font-serif); font-style:italic; color:var(--accent)">clarity</em></h2>
-        </div>
-        <div class="about-text fade-up">
-          <p>I'm <span class="about-highlight">Pratik Poudel</span>, a data professional with a deep passion for uncovering the stories hidden within numbers. My journey spans across Python development, database architecture, and applied machine learning.</p>
-          <p>I believe that data science is not just about algorithms — it's about asking the right questions, building reliable pipelines, and communicating findings with precision and purpose.</p>
-          <p>Whether it's designing complex SQL queries, training predictive models, or building automated data workflows, I bring both technical rigour and creative problem-solving to every project.</p>
-        </div>
-      </div>
+      <div class="poems-layout">
+        <div class="poem-card">
+          <div class="poem-title">The River Remembers</div>
+          <div class="poem-lines">
+The river does not ask
+where it is going —
+it only knows the song
+of stones beneath its feet.
 
-      <div class="fade-up">
-        <div style="background: var(--surface); border: 1px solid var(--border); padding: 2.5rem; margin-bottom: 1.5rem; position: relative; overflow: hidden;">
-          <div style="position:absolute; top:-20px; right:-20px; width:100px; height:100px; border-radius:50%; background: radial-gradient(circle, rgba(200,169,110,0.1), transparent 70%);"></div>
-          <p class="section-label" style="margin-bottom: 1.5rem;">Quick Info</p>
-          <div class="about-info-list">
-            <div class="about-info-item">
-              <span class="about-info-key">Name</span>
-              <span class="about-info-val">Pratik Poudel</span>
-            </div>
-            <div class="about-info-item">
-              <span class="about-info-key">Location</span>
-              <span class="about-info-val">Nepal 🇳🇵</span>
-            </div>
-            <div class="about-info-item">
-              <span class="about-info-key">Website</span>
-              <span class="about-info-val"><a href="https://pratikpoudel0.com.np" target="_blank">pratikpoudel0.com.np</a></span>
-            </div>
-            <div class="about-info-item">
-              <span class="about-info-key">Email</span>
-              <span class="about-info-val"><a href="mailto:poudelpratik50@gmail.com">poudelpratik50@gmail.com</a></span>
-            </div>
-            <div class="about-info-item">
-              <span class="about-info-key">Status</span>
-              <span class="about-info-val" style="color: #4ade80;">Open to Work</span>
-            </div>
+I have learned to walk
+the same way,
+trusting the current
+more than the map.
           </div>
+          <div class="poem-footer">From "Blue Clouds" — 2021</div>
+        </div>
+
+        <div class="poem-card">
+          <div class="poem-title">Mother's Hands</div>
+          <div class="poem-lines">
+Her hands were the first atlas I knew —
+rough terrain of love
+mapped in flour and prayers,
+in cold mornings and lantern light.
+
+I trace them still,
+in my own palms,
+looking for home.
+          </div>
+          <div class="poem-footer">From "Luminous Night" — 2024</div>
+        </div>
+
+        <div class="poem-card">
+          <div class="poem-title">Monsoon Letter</div>
+          <div class="poem-lines">
+The rain writes your name
+on every window —
+I read it in a language
+I thought I had forgotten.
+
+Some words return
+only when they are wept.
+          </div>
+          <div class="poem-footer">Unpublished, 2025</div>
+        </div>
+
+        <div class="poem-card">
+          <div class="poem-title">Mountains at Dusk</div>
+          <div class="poem-lines">
+The Himalayas put on their purple robes
+each evening without ceremony —
+no applause, no audience required.
+
+Beauty, I have learned,
+does not wait
+to be witnessed.
+          </div>
+          <div class="poem-footer">From "Blue Clouds" — 2021</div>
         </div>
       </div>
     </div>
   </section>
 
-  <hr class="divider">
+  <!-- ══ CONTACT ══ -->
+  <section class="contact-section" id="contact">
+    <div class="section-inner">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Connect with Puspa</h2>
+      <p class="section-subtitle">For readings, collaborations, interviews, or simply to share your thoughts about her work.</p>
 
-  <!-- ─── SKILLS ─── -->
-  <div class="skills-section" id="skills">
-    <div>
-      <div class="section-header">
-        <p class="section-label">Expertise</p>
-        <h2 class="section-title">Core Skills &<br>Technologies</h2>
-        <p class="section-subtitle" style="margin-top:0.75rem;">A focused toolkit built for real-world data challenges — from raw ingestion to insightful reporting.</p>
-      </div>
-
-      <div class="skills-grid">
-        <div class="skill-card fade-up">
-          <p class="skill-card-num">01</p>
-          <div class="skill-card-icon">🐍</div>
-          <h3 class="skill-card-title">Python</h3>
-          <p class="skill-card-desc">Writing clean, efficient Python code for data manipulation, automation, API development, and statistical modelling across diverse domains.</p>
-          <div class="skill-card-tags">
-            <span class="tag">Pandas</span>
-            <span class="tag">NumPy</span>
-            <span class="tag">Matplotlib</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">Jupyter</span>
+      <div class="contact-layout">
+        <div class="contact-info-col">
+          <p>
+            Puspa Poudel welcomes letters from readers, invitations to literary events, and conversations about the craft of writing. Every message is read with care and gratitude.
+          </p>
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <div class="icon">✉</div>
+              <span>puspapoudel.writes@gmail.com</span>
+            </div>
+            <div class="contact-detail-item">
+              <div class="icon">📍</div>
+              <span>Kathmandu, Nepal</span>
+            </div>
+            <div class="contact-detail-item">
+              <div class="icon">📖</div>
+              <span>Available for literary events & readings</span>
+            </div>
           </div>
         </div>
 
-        <div class="skill-card fade-up" style="transition-delay:0.1s">
-          <p class="skill-card-num">02</p>
-          <div class="skill-card-icon">🗄️</div>
-          <h3 class="skill-card-title">SQL</h3>
-          <p class="skill-card-desc">Mastery of relational databases — designing schemas, crafting complex queries, optimizing performance, and building data pipelines at scale.</p>
-          <div class="skill-card-tags">
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">MySQL</span>
-            <span class="tag">SQLite</span>
-            <span class="tag">Window Fns</span>
-            <span class="tag">Indexing</span>
+        <div class="contact-form-col">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input class="form-input" type="text" placeholder="Full name" />
           </div>
-        </div>
-
-        <div class="skill-card fade-up" style="transition-delay:0.2s">
-          <p class="skill-card-num">03</p>
-          <div class="skill-card-icon">📊</div>
-          <h3 class="skill-card-title">Data Science</h3>
-          <p class="skill-card-desc">End-to-end data science workflows: EDA, feature engineering, model training, evaluation, and deployment of predictive and analytical solutions.</p>
-          <div class="skill-card-tags">
-            <span class="tag">Scikit-learn</span>
-            <span class="tag">ML Models</span>
-            <span class="tag">EDA</span>
-            <span class="tag">Seaborn</span>
-            <span class="tag">Statsmodels</span>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" placeholder="your@email.com" />
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ─── PROJECTS ─── -->
-  <section id="projects">
-    <div class="section-header">
-      <p class="section-label">Work</p>
-      <h2 class="section-title">Featured Projects</h2>
-      <p class="section-subtitle" style="margin-top:0.75rem;">A selection of data-driven solutions built to solve real problems with precision and clarity.</p>
-    </div>
-
-    <div class="projects-grid">
-      <div class="project-card fade-up">
-        <p class="project-num">01 / Project</p>
-        <h3 class="project-title">Sales Analytics Dashboard</h3>
-        <p class="project-desc">Built an end-to-end analytics pipeline ingesting raw sales CSVs, transforming them with Python and SQL, and surfacing interactive KPI visualisations for business stakeholders.</p>
-        <div class="project-tech">
-          <span class="tech-badge">Python</span>
-          <span class="tech-badge">SQL</span>
-          <span class="tech-badge">Pandas</span>
-          <span class="tech-badge">Matplotlib</span>
-        </div>
-      </div>
-
-      <div class="project-card fade-up" style="transition-delay:0.1s">
-        <p class="project-num">02 / Project</p>
-        <h3 class="project-title">Customer Churn Predictor</h3>
-        <p class="project-desc">Developed a machine learning model to predict customer churn with 87% accuracy. Used feature engineering, cross-validation, and a gradient boosting classifier to minimise false negatives.</p>
-        <div class="project-tech">
-          <span class="tech-badge">Scikit-learn</span>
-          <span class="tech-badge">Python</span>
-          <span class="tech-badge">XGBoost</span>
-          <span class="tech-badge">SHAP</span>
-        </div>
-      </div>
-
-      <div class="project-card fade-up" style="transition-delay:0.15s">
-        <p class="project-num">03 / Project</p>
-        <h3 class="project-title">Database Optimisation Engine</h3>
-        <p class="project-desc">Audited and re-architected a PostgreSQL schema handling 10M+ records, reducing query latency by 65% through strategic indexing, query rewrites, and materialised views.</p>
-        <div class="project-tech">
-          <span class="tech-badge">PostgreSQL</span>
-          <span class="tech-badge">SQL</span>
-          <span class="tech-badge">Query Plans</span>
-        </div>
-      </div>
-
-      <div class="project-card fade-up" style="transition-delay:0.2s">
-        <p class="project-num">04 / Project</p>
-        <h3 class="project-title">Market Trend Analyser</h3>
-        <p class="project-desc">Automated collection and analysis of market data using Python scrapers, statistical trend detection, and time-series forecasting with ARIMA and Prophet models.</p>
-        <div class="project-tech">
-          <span class="tech-badge">Python</span>
-          <span class="tech-badge">Prophet</span>
-          <span class="tech-badge">Time Series</span>
-          <span class="tech-badge">NumPy</span>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input class="form-input" type="text" placeholder="What is this about?" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Write your message here…"></textarea>
+          </div>
+          <button class="btn-primary" style="align-self: flex-start;">Send Message</button>
         </div>
       </div>
     </div>
   </section>
 
-  <hr class="divider">
-
-  <!-- ─── CONTACT ─── -->
-  <section id="contact">
-    <div class="contact-wrap">
-      <div>
-        <div class="section-header">
-          <p class="section-label">Contact</p>
-          <h2 class="section-title">Let's Build<br><em style="font-style:italic;color:var(--accent);font-family:var(--font-serif)">Something</em></h2>
-          <p class="section-subtitle" style="margin-top:0.75rem;">Have a project, opportunity, or just want to talk data? My inbox is always open.</p>
-        </div>
-        <div class="contact-info-list fade-up">
-          <div class="contact-info-item">
-            <div class="contact-icon">✉</div>
-            <div>
-              <p class="contact-info-label">Email</p>
-              <p class="contact-info-val"><a href="mailto:poudelpratik50@gmail.com">poudelpratik50@gmail.com</a></p>
-            </div>
-          </div>
-          <div class="contact-info-item">
-            <div class="contact-icon">🌐</div>
-            <div>
-              <p class="contact-info-label">Website</p>
-              <p class="contact-info-val"><a href="https://pratikpoudel0.com.np" target="_blank" style="color: var(--accent);">pratikpoudel0.com.np</a></p>
-            </div>
-          </div>
-          <div class="contact-info-item">
-            <div class="contact-icon">📍</div>
-            <div>
-              <p class="contact-info-label">Location</p>
-              <p class="contact-info-val">Nepal — Open to Remote</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- FORM -->
-      <div class="contact-form-wrap fade-up">
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input type="text" class="form-input" placeholder="John Doe">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input type="email" class="form-input" placeholder="john@example.com">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" rows="5" placeholder="Tell me about your project..."></textarea>
-        </div>
-        <button class="btn-primary" style="clip-path:none; width:100%; text-align:center; cursor:pointer;" onclick="alert('Message sent! Pratik will get back to you shortly.')">Send Message →</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FOOTER ─── -->
+  <!-- ══ FOOTER ══ -->
   <footer>
-    <p>© 2025 Pratik Poudel — <span style="color: var(--accent);">pratikpoudel0.com.np</span></p>
-    <ul class="footer-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="mailto:poudelpratik50@gmail.com">Email</a></li>
-    </ul>
+    <div class="footer-brand">Puspa Poudel</div>
+    <div class="footer-copy">© 2025 Puspa Poudel &nbsp;·&nbsp; All Rights Reserved</div>
+    <div class="footer-socials">
+      <a href="#" title="Facebook">f</a>
+      <a href="#" title="Instagram">in</a>
+      <a href="#" title="Twitter / X">𝕏</a>
+    </div>
   </footer>
 
-  <script>
-    // ─── CURSOR
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
-    function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
-    animRing();
-    document.querySelectorAll('a, button, .skill-card, .project-card').forEach(el => {
-      el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(1.8)'; ring.style.borderColor = 'rgba(200,169,110,0.7)'; });
-      el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.borderColor = 'rgba(200,169,110,0.4)'; });
-    });
-
-    // ─── TYPING EFFECT
-    const words = ['Data Scientist', 'Python Developer', 'SQL Engineer', 'ML Enthusiast'];
-    let wi = 0, ci = 0, del = false;
-    const el = document.getElementById('typingText');
-    function type() {
-      const w = words[wi];
-      if (!del) { ci++; el.textContent = w.slice(0, ci); if (ci === w.length) { del = true; setTimeout(type, 1800); return; } }
-      else { ci--; el.textContent = w.slice(0, ci); if (ci === 0) { del = false; wi = (wi + 1) % words.length; } }
-      setTimeout(type, del ? 55 : 90);
-    }
-    setTimeout(type, 800);
-
-    // ─── SCROLL FADE
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-  </script>
 </body>
 </html>
