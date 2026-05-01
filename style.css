@@ -90,18 +90,22 @@ nav {
 .hero {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   padding-top: 5rem;
+  position: relative;
+  isolation: isolate;
 }
 
 .hero-photo-col {
   position: relative;
+  min-width: 0;
   background: var(--parchment);
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding: 4rem 3rem 0;
   overflow: hidden;
+  z-index: 1;
 }
 
 .hero-photo-col::before {
@@ -193,6 +197,8 @@ nav {
   justify-content: center;
   padding: 6rem 4rem 4rem 5rem;
   position: relative;
+  min-width: 0;
+  z-index: 2;
 }
 
 .hero-eyebrow {
