@@ -3,19 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Puspa Poudel — Writer & Poet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <script>
     (() => {
       const v = '20260502-1';
-      const url = new URL(window.location.href);
-      if (!url.searchParams.get('v')) {
-        url.searchParams.set('v', v);
-        window.location.replace(url.toString());
+      const isHttp = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+
+      if (isHttp) {
+        const url = new URL(window.location.href);
+        if (!url.searchParams.get('v')) {
+          url.searchParams.set('v', v);
+          window.location.replace(url.toString());
+          return;
+        }
+
+        const cssLink = document.querySelector('link[rel="stylesheet"][href="style.css"]');
+        if (cssLink) cssLink.href = `style.css?v=${encodeURIComponent(v)}`;
       }
     })();
   </script>
-  <title>Puspa Poudel — Writer & Poet</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260502-1">
 </head>
 <body>
 
@@ -90,7 +98,6 @@
     <div class="section-inner">
       <div class="section-label">प्रकाशित कृतिहरू</div>
       <h2 class="section-title">पुस्तकहरू</h2>
-      <p class="section-subtitle">२ वटा प्रकाशित पुस्तक र १ वटा आउँदैछ।</p>
 
       <div class="books-grid">
 
@@ -145,14 +152,6 @@
         <div class="stat-item">
           <div class="stat-number">1</div>
           <div class="stat-label">Coming Up</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">12+</div>
-          <div class="stat-label">Years of Writing</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">∞</div>
-          <div class="stat-label">Stories to Tell</div>
         </div>
       </div>
     </div>
