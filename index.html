@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    (() => {
+      const v = '20260502-1';
+      const url = new URL(window.location.href);
+      if (!url.searchParams.get('v')) {
+        url.searchParams.set('v', v);
+        window.location.replace(url.toString());
+      }
+    })();
+  </script>
   <title>Puspa Poudel — Writer & Poet</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20260502-1">
